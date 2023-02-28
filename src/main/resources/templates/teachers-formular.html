@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <th:block th:insert="~{navbar :: link}">.</th:block>
+</head>
+<body style="/*noinspection CssUnknownTarget*/background-image: url('images/Fon.png')">
+<header th:insert="~{navbar :: .navbar}">
+
+</header>
+<div class="container py-3">
+    <!--Create teacher modal -->
+    <div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="student-formular-form">
+                        <input type="text" id="order-id" value="0" hidden="hidden" name="id">
+                        <div class="mb-3">
+                            <label for="book" class="col-form-label">Книга:</label>
+                            <input type="text" class="form-control" id="book" name="book" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher" class="col-form-label">Викладач:</label>
+                            <input type="text" class="form-control" id="teacher" name="teacher" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="quantity" class="col-form-label">Кількість:
+                                <output>1</output>
+                            </label>
+                            <input type="range" class="form-range" id="quantity" name="quantity" min="1" max="50"
+                                   value="1" required="required"
+                                   oninput="this.previousElementSibling.firstElementChild.value = this.value">
+
+                        </div>
+                        <div class="mb-3">
+                            <label for="returned" class="col-form-label">Повернено:
+                                <output>0</output>
+                            </label>
+                            <input type="range" class="form-range" id="returned" name="returned" min="0" max="10"
+                                   value="0" required="required" readonly="readonly"
+                                   oninput="this.previousElementSibling.firstElementChild.value = this.value">
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-primary" onclick="teacherFormularSave()">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of create teacher modal -->
+    <!--Create class modal -->
+    <!--End of create class modal -->
+    <main>
+        <!--/*@thymesVar id="orders" type="java.util.List<com.smart.catalog.Domain.TeacherOrder>"*/-->
+        <!--/*@thymesVar id="teachers" type="java.util.List<com.smart.catalog.Domain.Teacher>"*/-->
+        <!--/*@thymesVar id="order" type="com.smart.catalog.Domain.TeacherOrder"*/-->
+
+        <div th:each="teacher : ${teachers}">
+            <!--/*@thymesVar id="teacher" type="com.smart.catalog.Domain.Teacher"*/-->
+            <button class="btn btn-secondary mt-2 mb-1" type="button" data-bs-toggle="collapse"
+                    th:data-bs-target="${'#teacherHide'+teacher.getId()}" aria-expanded="false"
+                    th:aria-controls="${'teacherHide'+teacher.getId()}"
+                    th:text="${teacher.getPib()}" th:id="${'teacher_button'+teacher.getId()}"
+                    th:onclick="'populateTable('+${teacher.getId()}+')'">
+            </button>
+            <div class="collapse" th:id="${'teacherHide'+teacher.getId()}"> <!--ІНФО КЛАСУ-->
+                <div class="card card-body">
+                    <!--th:attr="onload='populateTable('+${teacher.getId()}+')'"-->
+                    <table class="table text-center table-striped table-dark"
+                           th:classappend="'teacherTable'+${teacher.getId()}">
+                        <thead>
+                        <tr>
+                            <td>Назва книги</td>
+                            <td>Дата взяття</td>
+                            <td>Кількість</td>
+                            <td>Повернено</td>
+                            <td>Редагувати</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+</div>
+<!--<script type='text/javascript' th:src="@{js/teachers.js}"></script>-->
+<th:block th:insert="~{navbar :: script}">.</th:block>
+<script>
+    function populateTable(id) {
+        console.log('point 1');
+        if ($.fn.dataTable.isDataTable('.teacherTable' + id)) {
+            return;
+        }
+        let table = $('.teacherTable' + id).DataTable({
+            ajax: {
+                url: './ajax/teacherorders/byid',
+                data: {id: id},
+                dataSrc: ""
+            },
+            buttons:
+                [
+                    {
+                        text: 'Додати замовлення',
+                        action: function () {
+                            $('#bookModal').modal('show');
+                            let returned = $('#bookModal #returned');
+                            returned.val(0);
+                            returned.trigger("input");
+                            $('#bookModal #teacher').val($('#teacher_button' + id).text());
+                        }
+                    },
+                    {
+                        text: 'Перезавантажити',
+                        action: function () {
+                            table.clear();
+                            table.ajax.reload();
+                        }
+                    }
+                ],
+            columnDefs: [
+
+            ],
+            info: true,
+            columns: [
+                {data: "book.name"},
+                {data: "takeDate"},
+                {data: "quantity"},
+                {data: "returned"},
+                {
+                    "render": function(data, type, full, meta){
+                        return '<button class="btn btn-secondary" onclick="openEditModal('+full.id+')">Редагувати</button>';
+                    }
+                }
+            ],
+            initComplete: function () {
+                table.buttons(0, null).container()
+                    .appendTo('#teacherHide' + id + ' .dataTables_length');
+            },
+            language: {
+                url: "./json/Ukrainian.json"
+            }
+        });
+    }
+    $(document).ready(function startAutocomplete() {
+            console.log("autocomplete")
+            $.ajax({
+            url: "./ajax/books/names",
+            success: function(data) {
+                // init the widget with response data and let it do the filtering
+                $("#book").autocomplete({
+                    source: data,
+                    appendTo: $("#book").parent()
+                });
+            }
+        });
+        }
+    );
+
+    function openEditModal(id)
+    {
+        console.log('method')
+        $.ajax('./ajax/teacherorders/id',
+            {
+                data: {id : id},
+                success: function (data,status,xhr) {   // success callback function
+                    $('#bookModal #order-id').val(data.id);
+                    $('#bookModal #teacher').val(data.teacher.pib);
+                    $('#bookModal #book').val(data.book.name);
+                    $('#bookModal #quantity').val(data.quantity);
+                    $('#bookModal #quantity').trigger("input");
+                    $('#bookModal #returned').val(data.returned);
+                    $('#bookModal #returned').trigger("input");
+                    $('#bookModal').modal('show');
+                },
+            })
+
+
+    }
+
+    function teacherFormularSave()
+    {
+        let form = $('#student-formular-form');
+        console.log(form.serialize());
+        $.ajax({
+            type: "POST",
+            url: "ajax/teacherorders/save",
+            data: form.serialize(),
+            success: function ()
+            {
+
+                $('.teacherTable'+ $('button:contains("'+$('#teacher').val()+'")').attr('id')   .slice(14)).DataTable().ajax.reload();
+                $('#bookModal').modal('hide');
+                //location.reload();
+            }
+        });
+    }
+</script>
+</body>
+</html>

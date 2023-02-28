@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <th:block th:insert="~{navbar :: link}">.</th:block>
+
+</head>
+<body style="/*noinspection CssUnknownTarget*/background-image: url('../images/Fon.png')">
+<header th:insert="~{navbar :: .navbar}">
+
+</header>
+<div class="container py-3">
+    <main>
+        <!--/*@thymesVar id="pageNumbers" type="java.util.List<java.lang.Integer>"*/-->
+        <!--/*@thymesVar id="pageNumber" type="java.lang.Integer"*/-->
+        <!--/*@thymesVar id="book" type="com.smart.catalog.Domain.Book"*/-->
+        <!--/*@thymesVar id="bookPage" type="org.springframework.data.domain.Page<com.smart.catalog.Domain.Book>"*/-->
+        <div class="table-responsive">
+            <table class="table text-center table-striped table-dark">
+                <thead>
+                <tr>
+                    <th>Назва</th>
+                    <th>Автор</th>
+                    <th>Рік видання</th>
+                    <th>Тип</th>
+                    <th>Видавництво</th>
+                    <th>Залишок</th>
+                    <th>Розмір</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${bookPage.isEmpty()}">
+                    <td colspan="7">Книг не знайдено</td>
+                </tr>
+                <tr th:each="book : ${bookPage.content}">
+                    <td><span
+                            th:text="${book.name.length()>50?book.name.substring(0,47)+'...':book.name}"
+                            data-bs-toggle="tooltip" data-placement="top" th:title="${book.name}"> Title </span>
+                    </td>
+                    <td><span th:text="${book.author}"> Назва </span></td>
+                    <td><span th:text="${book.publishYear}"> 0000 </span></td>
+                    <td><span
+                            th:text="${book.type.name().equals('FICTION_BOOK')?'Художня':book.type.name().equals('SCHOOL_BOOK')}?'Підручник':'Не вказано'"> Не вказано </span>
+                    </td>
+                    <td><span th:text="${book.publisher}"> Освіта </span></td>
+                    <td><span th:text="${book.quantity}"> 0 </span></td>
+                    <td><span th:text="${book.size}"> 0 </span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--/*@thymesVar id="page" type="java.lang.Integer"*/-->
+        <!--/*@thymesVar id="size" type="java.lang.Integer"*/-->
+        <!--/*@thymesVar id="pagination" type="java.lang.String"*/-->
+        <nav aria-label="Page navigation example" class="d-flex justify-content-center">
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${page - 1 == 0} ?'disabled'"><a class="page-link"
+                                         th:href="@{/books(size=${size},page=${(page - 1)>=0?page - 1:1})}">Previous</a></li>
+                <!--suppress HtmlUnknownTag -->
+                <th:block th:utext="${pagination}">
+
+                </th:block>
+                <li class="page-item" th:classappend="${(page)>=pageNumbers?.size()} ?'disabled'"><a class="page-link"
+                                         th:href="@{/books(size=${size},page=${(page + 1)<=pageNumbers?.size()?page+1:pageNumbers?.size()})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </main>
+
+</div>
+<th:block th:insert="~{navbar :: script}">.</th:block>
+</body>
+</html>

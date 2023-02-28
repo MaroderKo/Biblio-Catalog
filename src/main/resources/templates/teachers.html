@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>teachers</title>
+    <th:block th:insert="~{navbar :: link}">.</th:block>
+</head>
+<body style="/*noinspection CssUnknownTarget*/background-image: url('images/Fon.png')">
+<header th:insert="~{navbar :: .navbar}">
+
+</header>
+<div class="container py-3">
+    <!--Create teacher modal -->
+    <div class="modal fade" id="teacherModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="teacher-form">
+                        <input type="number" id="teacher-id" th:value="0" hidden="hidden" name="id">
+                        <div class="mb-3">
+                            <label for="teacher-name" class="col-form-label">ПІБ:</label>
+                            <input type="text" class="form-control" id="teacher-name" name="pib" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-year" class="col-form-label">Рік народження:</label>
+                            <input type="number" class="form-control" id="teacher-year" name="birth_date" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-profession" class="col-form-label">Професія:</label>
+                            <input type="text" class="form-control" id="teacher-profession" name="profession"
+                                   required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-phone" class="col-form-label">Номер телефону:</label>
+                            <input type="text" class="form-control" id="teacher-phone" name="phone"
+                                   required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="teacher-address" class="col-form-label">Адреса:</label>
+                            <input type="text" class="form-control" id="teacher-address" name="address"
+                                   required="required">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-primary" onclick="teacherSave()">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of create teacher modal -->
+    <main>
+        <div>
+            <button style="min-width: 164px" class="btn btn-secondary mt-2 mb-1" type="button"
+                    data-bs-toggle="collapse"
+                    th:data-bs-target="${'#collapseSchool'}" aria-expanded="false"
+                    th:aria-controls="${'collapseSchool'}" onclick="populateTeacherTable()">
+                Список викладачів
+            </button>
+        </div>
+        <div class="collapse" th:id="${'collapseSchool'}">
+            <div class="card card-body">
+                <div class="table-responsive teacher-wrapper">
+                    <table class="table text-center table-striped table-dark teacher-table">
+                        <thead>
+                        <tr>
+                            <th>ПІБ</th>
+                            <th>Тел.</th>
+                            <th>Рік народження</th>
+                            <th>Професія</th>
+                            <th>Адреса</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    function populateTeacherTable()
+    {
+        if ( $.fn.dataTable.isDataTable( '.teacher-table' ) ) {
+            return;
+        }
+        let table = $('.teacher-table').DataTable({
+            ajax: {
+                url: './ajax/teachers',
+                dataSrc: ""
+            },
+            info: true,
+            bAutoWidth: true,
+            buttons: [
+                {
+                    text: 'Додати нового викладача',
+                    action: function ()
+                    {
+                        $('#teacherModal').modal('show');
+                    }
+                }
+            ],
+            columns: [
+                {data: "pib"},
+                {data: "phone"},
+                {data: "birthDate"},
+                {data: "profession"},
+                {data: "address"}
+            ],
+            language: {
+                url: "./json/Ukrainian.json"
+            },
+            initComplete: function (settings, json)
+            {
+                table.buttons(0,null).container()
+                    .appendTo('.teacher-wrapper .dataTables_length');
+            }
+        });
+    }
+    function teacherSave()
+    {
+        let form = $('#teacher-form');
+        console.log(form.serialize());
+        $.ajax({
+            type: "POST",
+            url: "ajax/teachers/save",
+            data: form.serialize(),
+            success: function ()
+            {
+                location.reload();
+            }
+        });
+    }
+</script>
+<th:block th:insert="~{navbar :: script}">.</th:block>
+</body>
+</html>

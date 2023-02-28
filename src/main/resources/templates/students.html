@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Books</title>
+    <th:block th:insert="~{navbar :: link}">.</th:block>
+</head>
+<body style="/*noinspection CssUnknownTarget*/background-image: url('images/Fon.png')">
+<header th:insert="~{navbar :: .navbar}">
+
+</header>
+<div class="container py-3">
+    <!--Create student modal -->
+    <div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="student-form">
+                        <input type="text" id="student-id" value="0" hidden="hidden" name="id">
+                        <div class="mb-3">
+                            <label for="student-name" class="col-form-label">ПІБ:</label>
+                            <input type="text" class="form-control" id="student-name" name="pib" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="student-year" class="col-form-label">Рік народження:</label>
+                            <input type="text" class="form-control" id="student-year" name="birth_date" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="student-phone" class="col-form-label">Телефон:</label>
+                            <input type="text" class="form-control" id="student-phone" name="phone"
+                                   required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="student-address" class="col-form-label">Адреса:</label>
+                            <input type="text" class="form-control" id="student-address" name="address"
+                                   required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="student-class" class="col-form-label">Клас:</label>
+                            <input type="text" class="form-control" id="student-class" name="class-name" readonly="readonly"
+                                   required="required">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-primary" onclick="studentSave()">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of create student modal -->
+    <!--Create class modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel1">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="class-form">
+                        <input type="text" id="class-id" value="0" hidden="hidden" name="id">
+                        <div class="mb-3">
+                            <label for="class-name" class="col-form-label">Назва класу:</label>
+                            <input type="text" class="form-control" id="class-name" name="name" required="required">
+                        </div>
+                        <div class="mb-3">
+                            <label for="class-teacher" class="col-form-label">Класний керівник:</label>
+                            <input type="text" class="form-control" id="class-teacher" name="teacher"
+                                   required="required">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрити</button>
+                    <button type="button" class="btn btn-primary" onclick="classSave()">Зберегти</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End of create class modal -->
+    <main>
+        <!--/*@thymesVar id="classes" type="java.util.List<com.smart.catalog.Domain.SchoolClass>"*/-->
+        <!--/*@thymesVar id="class" type="com.smart.catalog.Domain.SchoolClass"*/-->
+        <th:block th:each="class : ${classes}">
+            <div>
+                <button style="width: 164px" class="btn btn-secondary mt-2 mb-1" type="button" data-bs-toggle="collapse"
+                        th:data-bs-target="${'#collapseExample'+class.getId()}" aria-expanded="false"
+                        th:aria-controls="${'collapseExample'+class.getId()}" th:text="${class.name}">
+
+                </button>
+            </div>
+            <div class="collapse" th:id="${'collapseExample'+class.getId()}">
+                <div class="card card-body">
+                    <p th:text="'Класний керівник: '+${class.getClassTeacher()}"></p>
+                    <th:block th:each="student : ${class.getStudents()}">
+                        <!--/*@thymesVar id="student" type="com.smart.catalog.Domain.Student"*/-->
+                        <p th:text="${student.getPib()}"></p>
+                    </th:block>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentModal"
+                            th:attr="onclick=${'setClass('''+class.name+''')'}" onclick="setClass()">
+                        Додати нового учня
+                    </button>
+                </div>
+            </div>
+        </th:block>
+        <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Додати новий клас
+        </button>
+    </main>
+
+</div>
+<script type='text/javascript' th:src="@{js/students.js}"></script>
+<th:block th:insert="~{navbar :: script}">.</th:block>
+</body>
+</html>

@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/catalog
+    type: com.zaxxer.hikari.HikariDataSource
+    initialize: false
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      use-new-id-generator-mappings: true
+logging:
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG
+server:
+  servlet:
+    session:
+      timeout: 5
+#    #open-in-view: false
+#    properties:
+#      hibernate.format_sql: true
+#thymeleaf:
+#  prefix: "templates/"
+#  suffix: ".html"

@@ -1,0 +1,62 @@
+<html><nav class="navbar navbar-expand-md navbar-dark bg-dark" aria-label="Fourth navbar example">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Бібліотечний каталог</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample04"
+                aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample04">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-bs-toggle="dropdown"
+                       aria-expanded="false">Формуляр</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown01">
+                        <li><a class="dropdown-item" href="studentsformular">Учні</a></li>
+                        <li><a class="dropdown-item" href="teachersformular">Викладачі</a></li>
+                        <li><a class="dropdown-item" href="classesformular">Класи</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-bs-toggle="dropdown"
+                       aria-expanded="false">Каталог</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown02">
+                        <li><a class="dropdown-item" href="students">Учні</a></li>
+                        <li><a class="dropdown-item" href="teachers">Викладачі</a></li>
+                        <li><a class="dropdown-item" href="books">Книги</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-bs-toggle="dropdown"
+                       aria-expanded="false">Менеджмент</a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdown04">
+                        <li><a class="dropdown-item" href="#">Надходження книг</a></li>
+                        <li><a class="dropdown-item" href="#">Запозичення книг з інших закладів</a></li>
+                        <li><a class="dropdown-item" href="#">Запозичення книг іншим закладам</a></li>
+                        <li><a class="dropdown-item" href="#">Списання книг</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Боржники</a>
+                </li>
+            </ul>
+            <form role="search">
+                <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+            </form>
+        </div>
+    </div>
+</nav>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="Stylesheet">
+<link th:href="@{css/jquery-ui.css}" rel="Stylesheet">
+<link th:href="@{css/jquery.dataTables.min.css}" rel="Stylesheet">
+<link th:href="@{css/buttons.dataTables.min.css}" rel="Stylesheet">
+<link th:href="@{css/jquery-ui.structure.min.css}" rel="Stylesheet">
+<link th:href="@{css/jquery-ui.theme.min.css}" rel="Stylesheet">
+
+<script type='text/javascript' th:src="@{/js/jquery-3.6.0.min.js}"></script>
+<script type='text/javascript' th:src="@{/js/jquery-ui.js}"></script>
+<script type='text/javascript' th:src="@{/js/bootstrap.bundle.min.js}"></script>
+<script type='text/javascript' th:src="@{/js/jquery.dataTables.min.js}"></script>
+<script type='text/javascript' th:src="@{/js/dataTables.buttons.min.js}"></script>
+</html>
