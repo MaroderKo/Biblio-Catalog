@@ -9,27 +9,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.Optional;
+import java.util.OptionalInt;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
     @GetMapping("")
-    private String getAll(Model model) {
+    private String getAll() {
         //model.addAttribute("books", service.getAll());
         return "books";
-    }
-
-    @PostMapping("")
-    private RedirectView searchStart(RedirectAttributes attributes,
-                                     @RequestParam("page") Optional<Integer> page,
-                                     @RequestParam("size") Optional<Integer> size,
-                                     @RequestBody Optional<String> search)
-    {
-        page.ifPresent(p -> attributes.addAttribute("page", 1));
-        page.ifPresent(s -> attributes.addAttribute("size", s));
-        page.ifPresent(sear -> attributes.addAttribute("search", sear));
-        return new RedirectView("redirectedUrl");
     }
 
 

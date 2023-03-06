@@ -19,8 +19,8 @@ public class TeacherFormularController {
     private final TeacherOrderService orderService;
     private final TeacherService teacherService;
 
-    @Autowired
-    public TeacherFormularController(TeacherOrderService orderService, TeacherService teacherService) {
+
+    private TeacherFormularController(TeacherOrderService orderService, TeacherService teacherService) {
         this.orderService = orderService;
         this.teacherService = teacherService;
     }
