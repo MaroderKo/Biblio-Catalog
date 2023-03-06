@@ -4,8 +4,19 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
-        <include file="db.migration/DatabaseInit.sql" relativeToChangelogFile="true"/>
+        <include file="db.migration/databaseInit.sql" relativeToChangelogFile="true"/>
 
+<!--        <changeSet id="000001" author="Dex">-->
+<!--                <createTable tableName="book">-->
+<!--                        <column name="id" type="integer" autoIncrement="true">-->
+<!--                                <constraints primaryKey="true" nullable="false"/>-->
+<!--                        </column>-->
+<!--                        <column name="author" type="varchar(255)"/>-->
+<!--                        <column name="class_num" type="integer"/>-->
+<!--                        <column name="name" type="varchar(255)"/>-->
+<!--                        <column name=""-->
+<!--                </createTable>-->
+<!--        </changeSet>-->
 
 
 
