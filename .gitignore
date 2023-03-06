@@ -1,4 +1,4 @@
-HELP.md
+pdaHELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
@@ -40,3 +40,5 @@ out/
 /build/
 /gradle/
 /test.log
+/database.mv.db
+/database.trace.db

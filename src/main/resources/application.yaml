@@ -1,17 +1,19 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/catalog
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: admin
+    url: jdbc:h2:file:./database
     type: com.zaxxer.hikari.HikariDataSource
     initialize: false
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
-      dialect: org.hibernate.dialect.PostgreSQL10Dialect
+      dialect: org.hibernate.dialect.H2Dialect
       use-new-id-generator-mappings: true
+  liquibase:
+    change-log: db/changelog/liquibase-changelog.xml
 logging:
   level:
     org:
@@ -23,9 +25,3 @@ server:
   servlet:
     session:
       timeout: 5
-#    #open-in-view: false
-#    properties:
-#      hibernate.format_sql: true
-#thymeleaf:
-#  prefix: "templates/"
-#  suffix: ".html"
