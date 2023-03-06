@@ -20,7 +20,7 @@ public class ClassFormularController {
     private final SchoolClassService schoolClassService;
 
 
-    private ClassFormularController(ClassOrderService orderService, SchoolClassService schoolClassService) {
+    public ClassFormularController(ClassOrderService orderService, SchoolClassService schoolClassService) {
         this.orderService = orderService;
         this.schoolClassService = schoolClassService;
     }

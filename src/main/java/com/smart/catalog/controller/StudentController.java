@@ -17,7 +17,7 @@ public class StudentController {
     private final SchoolClassService service;
 
 
-    private StudentController(SchoolClassService service) {
+    public StudentController(SchoolClassService service) {
         this.service = service;
     }
 

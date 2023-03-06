@@ -28,7 +28,7 @@ public class AjaxController {
     private final StudentOrderService studentOrderService;
     private final ClassOrderService classOrderService;
 
-    private AjaxController(BookService bookService, StudentService studentService, TeacherService teacherService, TeacherOrderService teacherOrderService, SchoolClassService schoolClassService, StudentOrderService studentOrderService, ClassOrderService classOrderService) {
+    public AjaxController(BookService bookService, StudentService studentService, TeacherService teacherService, TeacherOrderService teacherOrderService, SchoolClassService schoolClassService, StudentOrderService studentOrderService, ClassOrderService classOrderService) {
         this.bookService = bookService;
         this.studentService = studentService;
         this.teacherService = teacherService;
