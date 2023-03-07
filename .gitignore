@@ -42,3 +42,4 @@ out/
 /test.log
 /database.mv.db
 /database.trace.db
+/backup/

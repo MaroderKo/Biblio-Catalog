@@ -86,8 +86,8 @@
     </div>
     <!--End of create class modal -->
     <main>
-        <!--/*@thymesVar id="classes" type="java.util.List<com.smart.catalog.Domain.SchoolClass>"*/-->
-        <!--/*@thymesVar id="class" type="com.smart.catalog.Domain.SchoolClass"*/-->
+        <!--/*@thymesVar id="classes" type="java.util.List<com.smart.catalog.domain.SchoolClass>"*/-->
+        <!--/*@thymesVar id="class" type="com.smart.catalog.domain.SchoolClass"*/-->
         <th:block th:each="class : ${classes}">
             <div>
                 <button style="width: 164px" class="btn btn-secondary mt-2 mb-1" type="button" data-bs-toggle="collapse"
@@ -100,7 +100,7 @@
                 <div class="card card-body">
                     <p th:text="'Класний керівник: '+${class.getClassTeacher()}"></p>
                     <th:block th:each="student : ${class.getStudents()}">
-                        <!--/*@thymesVar id="student" type="com.smart.catalog.Domain.Student"*/-->
+                        <!--/*@thymesVar id="student" type="com.smart.catalog.domain.Student"*/-->
                         <p th:text="${student.getPib()}"></p>
                     </th:block>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#studentModal"
