@@ -4,8 +4,8 @@ import com.smart.catalog.domain.Book;
 import lombok.Data;
 
 @Data
-public class BookDTO extends Book {
-    public BookDTO(Book b)
+public class BookTransferDTO extends Book {
+    public BookTransferDTO(Book b)
     {
         setId(b.getId());
         setName(b.getName());

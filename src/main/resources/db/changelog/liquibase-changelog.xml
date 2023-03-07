@@ -4,19 +4,105 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.19.xsd">
-        <include file="db.migration/databaseInit.sql" relativeToChangelogFile="true"/>
 
-<!--        <changeSet id="000001" author="Dex">-->
-<!--                <createTable tableName="book">-->
-<!--                        <column name="id" type="integer" autoIncrement="true">-->
-<!--                                <constraints primaryKey="true" nullable="false"/>-->
-<!--                        </column>-->
-<!--                        <column name="author" type="varchar(255)"/>-->
-<!--                        <column name="class_num" type="integer"/>-->
-<!--                        <column name="name" type="varchar(255)"/>-->
-<!--                        <column name=""-->
-<!--                </createTable>-->
-<!--        </changeSet>-->
+        <changeSet id="000001" author="Dex">
+                <createTable tableName="book">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="author" type="varchar"/>
+                        <column name="class_num" type="integer"/>
+                        <column name="name" type="varchar"/>
+                        <column name="publish_year" type="integer"/>
+                        <column name="publisher" type="varchar"/>
+                        <column name="quantity" type="integer"/>
+                        <column name="size" type="integer"/>
+                        <column name="type" type="integer"/>
+                </createTable>
+                <createTable tableName="borrowed_order">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="borrow_date" type="timestamp"/>
+                        <column name="counter_agent" type="varchar"/>
+                        <column name="quantity" type="integer"/>
+                        <column name="return_date" type="timestamp"/>
+                        <column name="returned" type="boolean"/>
+                        <column name="book_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_order_book" references="book(id)"/>
+                        </column>
+                </createTable>
+                <createTable tableName="school_class">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="class_teacher" type="varchar"/>
+                        <column name="name" type="varchar"/>
+                </createTable>
+                <createTable tableName="class_order">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="quantity" type="integer"/>
+                        <column name="school_class_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_order_class" references="school_class(id)"/>
+                        </column>
+                        <column name="book_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_class_order_book" references="book(id)"/>
+                        </column>
+                        <column name="returned" type="integer"/>
+                </createTable>
+                <createTable tableName="student">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="address" type="varchar"/>
+                        <column name="birth_date" type="integer"/>
+                        <column name="phone" type="varchar"/>
+                        <column name="pib" type="varchar"/>
+                        <column name="schoolclass_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_student_class" references="school_class(id)"/>
+                        </column>
+                </createTable>
+                <createTable tableName="student_order">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="quantity" type="integer"/>
+                        <column name="returned" type="integer"/>
+                        <column name="take_date" type="date"/>
+                        <column name="book_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_student_order_book" references="book(id)"/>
+                        </column>
+                        <column name="student_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_student_order_student" references="student(id)"/>
+                        </column>
+                </createTable>
+                <createTable tableName="teacher">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="address" type="varchar"/>
+                        <column name="birth_date" type="integer"/>
+                        <column name="phone" type="varchar"/>
+                        <column name="pib" type="varchar"/>
+                        <column name="profession" type="varchar"/>
+                </createTable>
+                <createTable tableName="teacher_order">
+                        <column name="id" type="integer" autoIncrement="true">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="quantity" type="integer"/>
+                        <column name="returned" type="integer"/>
+                        <column name="take_date" type="date"/>
+                        <column name="book_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_teacher_order_book" references="book(id)"/>
+                        </column>
+                        <column name="teacher_id" type="integer">
+                                <constraints nullable="false" foreignKeyName="fkey_teacher_order_teacher" references="teacher(id)"/>
+                        </column>
+                </createTable>
+        </changeSet>
 
 
 

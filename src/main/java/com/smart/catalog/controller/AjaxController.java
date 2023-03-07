@@ -1,7 +1,7 @@
 package com.smart.catalog.controller;
 
-import com.smart.catalog.dto.BookDTO;
 import com.smart.catalog.domain.*;
+import com.smart.catalog.dto.BookTransferDTO;
 import com.smart.catalog.exception.SearchItemsNotFoundException;
 import com.smart.catalog.service.*;
 import org.slf4j.Logger;
@@ -40,12 +40,12 @@ public class AjaxController {
 
     //BOOK
     @GetMapping("/books/fiction")
-    private Collection<BookDTO> getAllFictionBook() {
+    private Collection<BookTransferDTO> getAllFictionBook() {
         List<Book> books = bookService.findByType(BookType.FICTION_BOOK);
-        List<BookDTO> result = new ArrayList<>();
+        List<BookTransferDTO> result = new ArrayList<>();
         for(Book book : books)
         {
-            BookDTO dto = new BookDTO(book);
+            BookTransferDTO dto = new BookTransferDTO(book);
             dto.setBalance(dto.getQuantity());
             studentOrderService.getByBookId(dto.getId()).forEach(o -> dto.setBalance(dto.getBalance()-o.getQuantity()+o.getReturned()));
             teacherOrderService.getByBookId(dto.getId()).forEach(o -> dto.setBalance(dto.getBalance()-o.getQuantity()+o.getReturned()));
@@ -55,12 +55,12 @@ public class AjaxController {
     }
 
     @GetMapping("/books/school")
-    private Collection<BookDTO> getAllSchoolBook() {
+    private Collection<BookTransferDTO> getAllSchoolBook() {
         List<Book> books = bookService.findByType(BookType.SCHOOL_BOOK);
-        List<BookDTO> result = new ArrayList<>();
+        List<BookTransferDTO> result = new ArrayList<>();
         for(Book book : books)
         {
-            BookDTO dto = new BookDTO(book);
+            BookTransferDTO dto = new BookTransferDTO(book);
             dto.setBalance(dto.getQuantity());
             studentOrderService.getByBookId(dto.getId()).forEach(o -> dto.setBalance(dto.getBalance()-o.getQuantity()+o.getReturned()));
             teacherOrderService.getByBookId(dto.getId()).forEach(o -> dto.setBalance(dto.getBalance()-o.getQuantity()+o.getReturned()));
