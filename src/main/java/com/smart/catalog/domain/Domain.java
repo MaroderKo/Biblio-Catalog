@@ -12,5 +12,5 @@ import javax.persistence.MappedSuperclass;
 public class Domain {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    protected int id;
 }

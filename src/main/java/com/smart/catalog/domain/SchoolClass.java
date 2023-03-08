@@ -2,6 +2,7 @@ package com.smart.catalog.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 
 import javax.persistence.CascadeType;
@@ -13,9 +14,7 @@ import java.util.Objects;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 @RequiredArgsConstructor
 public class SchoolClass extends Domain{
     private String name;
@@ -25,4 +24,11 @@ public class SchoolClass extends Domain{
     private List<Student> students;
 
     private String classTeacher;
+
+    public SchoolClass(int id, String name, List<Student> students, String classTeacher) {
+        this.id = id;
+        this.name = name;
+        this.students = students;
+        this.classTeacher = classTeacher;
+    }
 }

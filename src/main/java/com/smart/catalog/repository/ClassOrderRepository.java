@@ -7,6 +7,8 @@ import java.util.List;
 
 
 @Repository
-public interface ClassOrderRepository extends AbstractRepository<ClassOrder>{
+public interface ClassOrderRepository extends AbstractRepository<ClassOrder> {
     List<ClassOrder> getClassOrdersBySchoolClass_Id(int id);
+
+    int countDistinctByBook_Id(int id);
 }

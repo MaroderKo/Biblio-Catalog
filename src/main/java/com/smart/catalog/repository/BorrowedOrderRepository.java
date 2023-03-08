@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BorrowedOrderRepository extends AbstractRepository<BorrowedOrder>{
+
+    int countDistinctByBook_Id(int id);
 }

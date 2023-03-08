@@ -2,6 +2,7 @@ package com.smart.catalog.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table(name = "teacher_order")
+@NoArgsConstructor
 public class TeacherOrder extends Domain{
     @ManyToOne
     @JoinColumn(name = "book_id")
@@ -22,5 +24,14 @@ public class TeacherOrder extends Domain{
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
     private int quantity;
-    private int returned = 0;
+    private int returned;
+
+    public TeacherOrder(int id, Book book, LocalDate takeDate, Teacher teacher, int quantity, int returned) {
+        this.id = id;
+        this.book = book;
+        this.takeDate = takeDate;
+        this.teacher = teacher;
+        this.quantity = quantity;
+        this.returned = returned;
+    }
 }

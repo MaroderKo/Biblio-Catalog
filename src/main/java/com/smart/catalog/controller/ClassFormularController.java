@@ -29,10 +29,7 @@ public class ClassFormularController {
     @GetMapping("")
     public String menu(Model model)
     {
-        List<SchoolClass> classes = schoolClassService.getAll();
-        classes.sort(Comparator.comparing(SchoolClass::getName));
-        System.out.println(classes);
-        model.addAttribute("schoolclasses", classes);
+        model.addAttribute("schoolclasses", schoolClassService.getAllSortedByName());
         model.addAttribute("orders", orderService.getAll());
         return "classes-formular";
     }

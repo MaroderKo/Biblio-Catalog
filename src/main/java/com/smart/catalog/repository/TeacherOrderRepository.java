@@ -12,4 +12,6 @@ public interface TeacherOrderRepository extends AbstractRepository<TeacherOrder>
     List<TeacherOrder> getTeacherOrdersByTeacher_Id(int id);
 
     List<TeacherOrder> getTeacherOrdersByBook_Id(int id);
+
+    int countDistinctByBook_Id(int id);
 }
