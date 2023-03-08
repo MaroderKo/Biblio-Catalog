@@ -1,6 +1,7 @@
 package com.smart.catalog.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;

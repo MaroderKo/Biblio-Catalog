@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +22,17 @@ public class BookService {
 
     private static final Logger LOG = LoggerFactory.getLogger(BookService.class);
 
-    BookRepository repository;
-    BookTransferDTOService bookTransferDTOService;
+    private final BookRepository repository;
+    private final TeacherOrderService teacherOrderService;
+    private final StudentOrderService studentOrderService;
+    private final ClassOrderService classOrderService;
 
-    public BookService(BookRepository repository, BookTransferDTOService bookTransferDTOService) {
+
+    public BookService(BookRepository repository, TeacherOrderService teacherOrderService, StudentOrderService studentOrderService, ClassOrderService classOrderService) {
         this.repository = repository;
-        this.bookTransferDTOService = bookTransferDTOService;
+        this.teacherOrderService = teacherOrderService;
+        this.studentOrderService = studentOrderService;
+        this.classOrderService = classOrderService;
     }
 
     public List<Book> findByType(BookType type) {
@@ -36,12 +40,15 @@ public class BookService {
     }
 
     public Book findByName(String name) {
-        return Optional.of(repository.findBookByName(name)).orElseThrow(SearchItemsNotFoundException::new);
+        return repository.findBookByName(name);
     }
 
     @Cacheable("books")
     public List<String> getNames() {
-        return repository.getBooksNames().stream().map(BookMapperDTO::getName).collect(Collectors.toList());
+        return repository.findAllByIdGreaterThan(0)
+                .stream()
+                .map(BookMapperDTO::getName)
+                .collect(Collectors.toUnmodifiableList());
     }
 
 
@@ -56,15 +63,15 @@ public class BookService {
         repository.delete(book);
     }
 
-    public Book changeQuantityByName(String name, int amount)
+    public void changeQuantityByName(String name, int amount)
     {
         Book book = findByName(name);
         book.setQuantity(book.getQuantity() + amount);
+        repository.save(book);
         if (amount < 0)
             LOG.info("Була списана книга \""+name+"\" в кількості "+amount+" автора "+book.getAuthor());
         else
             LOG.info("Надійшла книга \""+name+"\" в кількості "+amount+" автора "+book.getAuthor());
-        return save(book);
     }
 
     public void saveNew(Book book) {
@@ -94,15 +101,13 @@ public class BookService {
     public List<BookTransferDTO> getAllSchoolBook()
     {
         return findByType(BookType.SCHOOL_BOOK).stream()
-                .map(BookTransferDTO::new)
-                .map(bookTransferDTOService::updateAmount)
-                .collect(Collectors.toList());
+                .map( b -> new BookTransferDTO(b, studentOrderService,teacherOrderService,classOrderService))
+                .collect(Collectors.toUnmodifiableList());
     }
     public List<BookTransferDTO> getAllFictionBook()
     {
         return findByType(BookType.FICTION_BOOK).stream()
-                .map(book -> (BookTransferDTO)book)
-                .map(bookTransferDTOService::updateAmount)
-                .collect(Collectors.toList());
+                .map( b -> new BookTransferDTO(b, studentOrderService,teacherOrderService,classOrderService))
+                .collect(Collectors.toUnmodifiableList());
     }
 }

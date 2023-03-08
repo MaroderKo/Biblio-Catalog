@@ -7,7 +7,7 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     initialize: false
   jpa:
-    show-sql: true
+#    show-sql: true
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.H2Dialect

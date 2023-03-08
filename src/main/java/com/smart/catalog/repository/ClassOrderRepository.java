@@ -10,5 +10,5 @@ import java.util.List;
 public interface ClassOrderRepository extends AbstractRepository<ClassOrder> {
     List<ClassOrder> getClassOrdersBySchoolClass_Id(int id);
 
-    int countDistinctByBook_Id(int id);
+    List<ClassOrder> findDistinctByBook_Id(int id);
 }

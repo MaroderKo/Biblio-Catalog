@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/teachersformular")
+@RequestMapping("/teachers/formular")
 public class TeacherFormularController {
 
     private final TeacherOrderService orderService;

@@ -14,7 +14,7 @@ public class TeacherOrderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(TeacherOrderService.class);
 
-    TeacherOrderRepository repository;
+    private final TeacherOrderRepository repository;
 
     public List<TeacherOrder> getAll()
     {
@@ -41,20 +41,24 @@ public class TeacherOrderService {
 
     public int countBorrowed(Book book)
     {
-        return repository.countDistinctByBook_Id(book.getId());
+        return repository.findDistinctByBook_Id(book.getId()).stream().map(o -> o.getQuantity() - o.getReturned()).mapToInt(Integer::intValue).sum();
     }
 
     public void makeOrder(TeacherOrder order) {
         if (order.getId() == 0 ) {
             order.setReturned(0);
             LOG.info("Викладач "+order.getTeacher().getPib()+" взяв книгу "+order.getBook().getName());
+
         }
         if (order.getReturned() >= order.getQuantity())
         {
             LOG.info("Викладач "+order.getTeacher().getPib()+" повернув книгу "+order.getBook().getName());
             repository.deleteById(order.getId());
         }
-        repository.save(order);
+        else {
+            repository.save(order);
+        }
+
 
     }
 

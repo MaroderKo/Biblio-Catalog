@@ -1,10 +1,7 @@
 package com.smart.catalog.service;
 
 import com.smart.catalog.domain.Teacher;
-import com.smart.catalog.domain.TeacherOrder;
 import com.smart.catalog.repository.TeacherRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -13,7 +10,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TeacherService {
-    TeacherRepository repository;
+
+    private final TeacherRepository repository;
 
     public TeacherService(TeacherRepository repository) {
         this.repository = repository;
@@ -21,7 +19,7 @@ public class TeacherService {
 
     public List<Teacher> getAllSortedByName()
     {
-        return repository.findAll().stream().sorted(Comparator.comparing(Teacher::getPib)).collect(Collectors.toList());
+        return repository.findAll().stream().sorted(Comparator.comparing(Teacher::getPib)).collect(Collectors.toUnmodifiableList());
     }
 
     public List<Teacher> getAll()

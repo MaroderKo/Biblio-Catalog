@@ -6,7 +6,7 @@
     <title>Books</title>
     <th:block th:insert="~{navbar :: link}">.</th:block>
 </head>
-<body style="/*noinspection CssUnknownTarget*/background-image: url('images/Fon.png')">
+<body style="/*noinspection CssUnknownTarget*/background-image: url('/images/Fon.png')">
 <header th:insert="~{navbar :: .navbar}">
 
 </header>
@@ -108,7 +108,7 @@
         }
         let table = $('.teacherTable' + id).DataTable({
             ajax: {
-                url: './ajax/teacherorders/byid',
+                url: '/teachers/orders/byid',
                 data: {id: id},
                 dataSrc: ""
             },
@@ -159,7 +159,7 @@
     $(document).ready(function startAutocomplete() {
             console.log("autocomplete")
             $.ajax({
-            url: "./ajax/books/names",
+            url: "/books/names",
             success: function(data) {
                 // init the widget with response data and let it do the filtering
                 $("#book").autocomplete({
@@ -174,7 +174,7 @@
     function openEditModal(id)
     {
         console.log('method')
-        $.ajax('./ajax/teacherorders/id',
+        $.ajax('/teachers/orders/id',
             {
                 data: {id : id},
                 success: function (data,status,xhr) {   // success callback function
@@ -198,7 +198,7 @@
         console.log(form.serialize());
         $.ajax({
             type: "POST",
-            url: "ajax/teacherorders/save",
+            url: "/teachers/orders/save",
             data: form.serialize(),
             success: function ()
             {

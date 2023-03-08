@@ -3,7 +3,6 @@ package com.smart.catalog.repository;
 import com.smart.catalog.domain.Book;
 import com.smart.catalog.domain.BookType;
 import com.smart.catalog.dto.BookMapperDTO;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,5 +14,6 @@ public interface BookRepository extends AbstractRepository<Book>{
 
     Book findBookByName(String name);
 
-    List<BookMapperDTO> getBooksNames();
+
+    List<BookMapperDTO> findAllByIdGreaterThan(int id);
 }

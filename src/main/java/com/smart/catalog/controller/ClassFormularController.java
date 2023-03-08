@@ -1,19 +1,14 @@
 package com.smart.catalog.controller;
 
-import com.smart.catalog.domain.SchoolClass;
 import com.smart.catalog.service.ClassOrderService;
 import com.smart.catalog.service.SchoolClassService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Comparator;
-import java.util.List;
-
 @Controller
-@RequestMapping("/classesformular")
+@RequestMapping("/class/formular")
 public class ClassFormularController {
 
     private final ClassOrderService orderService;

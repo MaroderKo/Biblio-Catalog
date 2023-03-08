@@ -3,7 +3,6 @@ package com.smart.catalog.service;
 import com.smart.catalog.domain.Book;
 import com.smart.catalog.domain.Student;
 import com.smart.catalog.domain.StudentOrder;
-import com.smart.catalog.exception.SearchItemsNotFoundException;
 import com.smart.catalog.repository.StudentOrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,7 @@ public class StudentOrderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(StudentOrderService.class);
 
-    StudentOrderRepository repository;
+    private final StudentOrderRepository repository;
 
     public StudentOrderService(StudentOrderRepository repository) {
         this.repository = repository;
@@ -42,7 +41,7 @@ public class StudentOrderService {
 
     public int countBorrowed(Book book)
     {
-        return repository.countDistinctByBook_Id(book.getId());
+        return repository.findDistinctByBook_Id(book.getId()).stream().map(o -> o.getQuantity() - o.getReturned()).mapToInt(Integer::intValue).sum();
     }
 
     public void saveOrder(int id, Book book, Student student, int quantity, int returned) {

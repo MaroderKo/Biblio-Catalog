@@ -7,7 +7,7 @@
     <th:block th:insert="~{navbar :: link}">.</th:block>
 
 </head>
-<body style="/*noinspection CssUnknownTarget*/background-image: url('../images/Fon.png')">
+<body style="/*noinspection CssUnknownTarget*/background-image: url('/images/Fon.png')">
 <header th:insert="~{navbar :: .navbar}">
 
 </header>
@@ -196,7 +196,7 @@
         }
         let table = $('.' + tag + 'book-table').DataTable({
             ajax: {
-                url: './ajax/books/' + tag,
+                url: '/books/' + tag,
                 dataSrc: ""
             },
             info: true,
@@ -267,7 +267,7 @@
         let form = $('#book-form');
         $.ajax({
             type: "POST",
-            url: "ajax/books/save",
+            url: "/books/save",
             data: form.serialize(),
             success: function () {
                 reloadTables();
@@ -280,7 +280,7 @@
         let wform = $('#writeoff-form');
         $.ajax({
             type: "POST",
-            url: "ajax/books/writeoff",
+            url: "/books/writeoff",
             data: wform.serialize(),
             success: function (data,status,xhr) {
                 reloadTables();
@@ -292,7 +292,7 @@
         let eform = $('#earning-form');
         $.ajax({
             type: "POST",
-            url: "ajax/books/earning",
+            url: "/books/earning",
             data: eform.serialize(),
             success: function (data,status,xhr) {
                 console.log(status)

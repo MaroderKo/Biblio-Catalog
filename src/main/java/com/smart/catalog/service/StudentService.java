@@ -1,6 +1,5 @@
 package com.smart.catalog.service;
 
-import com.smart.catalog.domain.Book;
 import com.smart.catalog.domain.Student;
 import com.smart.catalog.repository.StudentRepository;
 import org.slf4j.Logger;
@@ -10,7 +9,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudentService {
     private static final Logger LOG = LoggerFactory.getLogger(StudentService.class);
-    StudentRepository repository;
+
+    private final StudentRepository repository;
 
     public StudentService(StudentRepository repository) {
         this.repository = repository;

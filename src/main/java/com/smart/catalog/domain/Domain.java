@@ -1,6 +1,6 @@
 package com.smart.catalog.domain;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

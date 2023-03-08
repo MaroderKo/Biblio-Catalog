@@ -13,5 +13,5 @@ public interface StudentOrderRepository extends AbstractRepository<StudentOrder>
 
     List<StudentOrder> getStudentOrdersByBook_Id(int id);
 
-    int countDistinctByBook_Id(int id);
+    List<StudentOrder> findDistinctByBook_Id(int id);
 }

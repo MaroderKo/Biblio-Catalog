@@ -15,7 +15,7 @@ import java.util.List;
 public class ClassOrderService {
     private static final Logger LOG = LoggerFactory.getLogger(ClassOrderService.class);
 
-    ClassOrderRepository repository;
+    private final ClassOrderRepository repository;
 
     public ClassOrderService(ClassOrderRepository repository) {
         this.repository = repository;
@@ -32,7 +32,7 @@ public class ClassOrderService {
 
     public int countBorrowed(Book book)
     {
-        return repository.countDistinctByBook_Id(book.getId());
+        return repository.findDistinctByBook_Id(book.getId()).stream().map(o -> o.getQuantity() - o.getReturned()).mapToInt(Integer::intValue).sum();
     }
 
     public ClassOrder getById(int id)

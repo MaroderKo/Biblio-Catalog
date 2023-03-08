@@ -9,7 +9,7 @@ function studentSave()
     let form = $('#student-form');
     $.ajax({
         type: "POST",
-        url: "ajax/students/save",
+        url: "students/save",
         data: form.serialize(),
         success: function ()
         {
@@ -22,7 +22,7 @@ function classSave()
     let form = $('#class-form');
     $.ajax({
         type: "POST",
-        url: "ajax/schoolclasses/save",
+        url: "/class/save",
         data: form.serialize(),
         success: function ()
         {
@@ -41,7 +41,7 @@ function classAutocomplete()
 function getClassNames()
 {
     let names = [];
-    $.get("ajax/schoolclasses/names", function(data)  {
+    $.get("/class/names", function(data)  {
         $.each(data,function (key,item) {
             names.add(item);
         })

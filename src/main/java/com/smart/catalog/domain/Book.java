@@ -1,6 +1,8 @@
 package com.smart.catalog.domain;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.builder.EqualsExclude;
 
 import javax.persistence.Entity;

@@ -14,7 +14,7 @@ import java.sql.SQLException;
 @EntityScan("com.smart.catalog")
 public class CatalogApplication {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         SpringApplication.run(CatalogApplication.class, args);
     }
 
