@@ -5,7 +5,6 @@ import com.smart.catalog.domain.BookType;
 import com.smart.catalog.dto.BookMapperDTO;
 import com.smart.catalog.dto.BookTransferDTO;
 import com.smart.catalog.exception.ItemAlreadyExistException;
-import com.smart.catalog.exception.SearchItemsNotFoundException;
 import com.smart.catalog.repository.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

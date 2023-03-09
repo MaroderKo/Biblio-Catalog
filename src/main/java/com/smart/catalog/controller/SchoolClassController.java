@@ -19,9 +19,9 @@ import java.util.List;
 @RequestMapping("/class")
 public class SchoolClassController {
 
-    SchoolClassService schoolClassService;
-    ClassOrderService classOrderService;
-    BookService bookService;
+    private final SchoolClassService schoolClassService;
+    private final ClassOrderService classOrderService;
+    private final BookService bookService;
 
     public SchoolClassController(SchoolClassService schoolClassService, ClassOrderService classOrderService, BookService bookService) {
         this.schoolClassService = schoolClassService;
