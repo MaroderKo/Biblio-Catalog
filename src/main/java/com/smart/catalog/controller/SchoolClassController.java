@@ -5,6 +5,7 @@ import com.smart.catalog.domain.SchoolClass;
 import com.smart.catalog.service.BookService;
 import com.smart.catalog.service.ClassOrderService;
 import com.smart.catalog.service.SchoolClassService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class SchoolClassController {
                            String name,
                            String teacher) {
         schoolClassService.save(new SchoolClass(id, name, List.of(), teacher));
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     @GetMapping(path = "/orders/byid", produces = MediaType.APPLICATION_JSON_VALUE)
     private @ResponseBody Collection<ClassOrder> getClassOrderByName(int id) {
@@ -60,6 +61,6 @@ public class SchoolClassController {
 
         ClassOrder order = new ClassOrder(id, schoolClassService.getByName(Class), LocalDate.now(), bookService.findByName(book), quantity, returned);
         classOrderService.makeOrder(order);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

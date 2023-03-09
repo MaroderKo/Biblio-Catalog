@@ -4,6 +4,7 @@ import com.smart.catalog.domain.Book;
 import com.smart.catalog.domain.BookType;
 import com.smart.catalog.dto.BookTransferDTO;
 import com.smart.catalog.service.BookService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -47,14 +48,14 @@ public class BookController {
     private ResponseEntity<Object> bookWriteOff(String name,
                               int quantity) {
         bookService.changeQuantityByName(name, -quantity);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PostMapping(path = "/earning", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Object> bookEarning(String name,
                                                int quantity) {
         bookService.changeQuantityByName(name, quantity);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PostMapping(path = "/save", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,7 +67,7 @@ public class BookController {
                                   int size,
                                   int quantity) {
         bookService.saveNew(new Book(name, year, author, publisher, type.equals("Підручник") ? BookType.SCHOOL_BOOK : BookType.FICTION_BOOK, size, quantity));
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 

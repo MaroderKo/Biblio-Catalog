@@ -5,6 +5,7 @@ import com.smart.catalog.domain.TeacherOrder;
 import com.smart.catalog.service.BookService;
 import com.smart.catalog.service.TeacherOrderService;
 import com.smart.catalog.service.TeacherService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -41,7 +42,7 @@ public class TeacherController {
     private ResponseEntity<Object> teacherSave(Teacher teacher) {
 
         teacherService.save(teacher);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping(path = "/orders/byid", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,7 +63,7 @@ public class TeacherController {
                                   int returned) {
 
         teacherOrderService.makeOrder(new TeacherOrder(id, bookService.findByName(book), LocalDate.now(), teacherService.findByName(teacher), quantity, returned));
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

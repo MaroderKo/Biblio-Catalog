@@ -6,6 +6,7 @@ import com.smart.catalog.service.BookService;
 import com.smart.catalog.service.SchoolClassService;
 import com.smart.catalog.service.StudentOrderService;
 import com.smart.catalog.service.StudentService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -64,7 +65,7 @@ public class StudentController {
                                        @RequestParam("class-name") String class_name) {
 
         studentService.save(new Student(id, pib, birth_date, phone, address, schoolClassService.getByName(class_name)));
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping(path = "/orders/save", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -75,7 +76,7 @@ public class StudentController {
                                   int returned) {
 
         studentOrderService.saveOrder(id, bookService.getByName(book), studentService.getByName(student), quantity, returned);
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
